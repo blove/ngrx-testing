@@ -5,6 +5,7 @@
     "module": "commonjs",
     "types": [
       "jasmine",
+      "jest",
       "node"
     ]
   },

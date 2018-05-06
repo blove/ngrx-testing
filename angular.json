@@ -122,5 +122,8 @@
       }
     }
   },
-  "defaultProject": "ngrx-marbles"
+  "defaultProject": "ngrx-marbles",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }

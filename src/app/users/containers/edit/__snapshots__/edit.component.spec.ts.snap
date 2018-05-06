@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditComponent should match snapshot 1`] = `
+<ng-component
+  activatedRoute={[Function Object]}
+  store={[Function Object]}
+  user$={[Function AnonymousSubject]}
+>
+  <app-user-form>
+    <form
+      class="ng-untouched ng-pristine ng-invalid"
+      ng-reflect-form="[object Object]"
+      novalidate=""
+    >
+      <input
+        class="ng-untouched ng-pristine ng-invalid"
+        formcontrolname="firstName"
+        ng-reflect-name="firstName"
+        placeholder="First Name"
+        type="text"
+      />
+      <input
+        class="ng-untouched ng-pristine ng-invalid"
+        formcontrolname="lastName"
+        ng-reflect-name="lastName"
+        placeholder="Last Name"
+        type="text"
+      />
+      <button>
+        Save
+      </button>
+    </form>
+  </app-user-form>
+</ng-component>
+`;

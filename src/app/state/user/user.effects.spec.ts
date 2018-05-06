@@ -1,0 +1,191 @@
+import { TestBed } from '@angular/core/testing';
+import { UserService } from '@core/services/user.service';
+import { Actions } from '@ngrx/effects';
+import { cold, hot } from 'jasmine-marbles';
+import { Observable, empty } from 'rxjs';
+import {
+  AddUser,
+  AddUserFail,
+  AddUserSuccess,
+  LoadUser,
+  LoadUserFail,
+  LoadUserSuccess,
+  LoadUsers,
+  LoadUsersFail,
+  LoadUsersSuccess,
+  UpdateUser,
+  UpdateUserFail,
+  UpdateUserSuccess
+} from './user.actions';
+import { UserEffects } from './user.effects';
+import { generateUser, generateUsers } from './user.model';
+
+export class TestActions extends Actions {
+  constructor() {
+    super(empty());
+  }
+
+  set stream(source: Observable<any>) {
+    this.source = source;
+  }
+}
+
+export function getActions() {
+  return new TestActions();
+}
+
+describe('UserEffects', () => {
+  let actions: TestActions;
+  let effects: UserEffects;
+  let userService: UserService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        UserEffects,
+        // provideMockActions(() => actions$),
+        {
+          provide: Actions,
+          useFactory: getActions
+        },
+        {
+          provide: UserService,
+          useValue: {
+            addUser: jest.fn(),
+            getUser: jest.fn(),
+            getUsers: jest.fn(),
+            updateUser: jest.fn()
+          }
+        }
+      ]
+    });
+
+    actions = TestBed.get(Actions);
+    effects = TestBed.get(UserEffects);
+    userService = TestBed.get(UserService);
+  });
+
+  it('should be created', () => {
+    expect(effects).toBeTruthy();
+  });
+
+  describe('addUser', () => {
+    it('should return an AddUserSuccess action, with the user, on success', () => {
+      const user = generateUser();
+      const action = new AddUser({ user });
+      const completion = new AddUserSuccess({ user });
+
+      actions.stream = hot('-a', { a: action });
+      const response = cold('-a|', { a: user });
+      const expected = cold('--b', { b: completion });
+      userService.addUser = jest.fn(() => response);
+
+      expect(effects.addUser).toBeObservable(expected);
+    });
+
+    it('should return an AddUserFail action, with an error, on failure', () => {
+      const user = generateUser();
+      const action = new AddUser({ user });
+      const error = new Error();
+      const completion = new AddUserFail({ error });
+
+      actions.stream = hot('-a', { a: action });
+      const response = cold('-#|', {}, error);
+      const expected = cold('--(b|)', { b: completion });
+      userService.addUser = jest.fn(() => response);
+
+      expect(effects.addUser).toBeObservable(expected);
+    });
+  });
+
+  describe('loadUsers', () => {
+    it('should return a LoadUsersSuccess action, with the users, on success', () => {
+      const users = generateUsers();
+      const action = new LoadUsers();
+      const completion = new LoadUsersSuccess({ users: users });
+
+      actions.stream = hot('-a---', { a: action });
+      const response = cold('-a|', { a: users });
+      const expected = cold('--b', { b: completion });
+      userService.getUsers = jest.fn(() => response);
+
+      expect(effects.loadUsers).toBeObservable(expected);
+    });
+
+    it('should return a LoadUsersFail action, with an error, on failure', () => {
+      const action = new LoadUsers();
+      const error = new Error();
+      const completion = new LoadUsersFail({ error: error });
+
+      actions.stream = hot('-a---', { a: action });
+      const response = cold('-#|', {}, error);
+      const expected = cold('--(b|)', { b: completion });
+      userService.getUsers = jest.fn(() => response);
+
+      expect(effects.loadUsers).toBeObservable(expected);
+    });
+  });
+
+  describe('loadUser', () => {
+    it('should return a LoadUserSuccess action, with the user, on success', () => {
+      const user = generateUser();
+      const action = new LoadUser({ id: user.id });
+      const completion = new LoadUserSuccess({ user });
+
+      actions.stream = hot('-a---', { a: action });
+      const response = cold('-a|', { a: user });
+      const expected = cold('--b', { b: completion });
+      userService.getUser = jest.fn(() => response);
+
+      expect(effects.loadUser).toBeObservable(expected);
+    });
+
+    it('should return a LoadUserFail action, with an error, on failure', () => {
+      const user = generateUser();
+      const action = new LoadUser({ id: user.id });
+      const error = new Error();
+      const completion = new LoadUserFail({ error });
+
+      actions.stream = hot('-a---', { a: action });
+      const response = cold('-#|', {}, error);
+      const expected = cold('--(b|)', { b: completion });
+      userService.getUser = jest.fn(() => response);
+
+      expect(effects.loadUser).toBeObservable(expected);
+    });
+  });
+
+  describe('updateUser', () => {
+    it('should return an UpdateUserSuccess action, with the user, on success', () => {
+      const user = generateUser();
+      const action = new UpdateUser({ user });
+      const completion = new UpdateUserSuccess({
+        update: {
+          id: user.id,
+          changes: user
+        }
+      });
+
+      actions.stream = hot('-a', { a: action });
+      const response = cold('-a|', { a: user });
+      const expected = cold('--b', { b: completion });
+      userService.updateUser = jest.fn(() => response);
+
+      expect(effects.updateUser).toBeObservable(expected);
+    });
+
+    it('should return an UpdateUserFail action, with an error, on failure', () => {
+      const user = generateUser();
+      const action = new UpdateUser({ user });
+      const error = new Error();
+      const completion = new UpdateUserFail({ error });
+
+      actions.stream = hot('-a', { a: action });
+      const response = cold('-#|', {}, error);
+      const expected = cold('--(b|)', { b: completion });
+      userService.updateUser = jest.fn(() => response);
+
+      expect(effects.updateUser).toBeObservable(expected);
+    });
+  });
+});

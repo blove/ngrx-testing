@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IndexComponent should match snapshot 1`] = `
+<ng-component
+  store={[Function Store]}
+  users={[Function Store]}
+>
+  <app-user-list
+    ng-reflect-users=""
+  >
+    <ul>
+      
+    </ul>
+  </app-user-list>
+</ng-component>
+`;

@@ -1,0 +1,2 @@
+<button routerLink="add">Add User</button>
+<app-user-list [users]="users | async" (selectUser)="onSelectUser($event)"></app-user-list>

@@ -1,0 +1,5 @@
+<ul>
+  <li *ngFor="let user of users" trackBy="user.id">
+    <a href="javascript:void(0)" (click)="selectUser.emit(user)">{{user.firstName}} {{user.lastName}}</a>
+  </li>
+</ul>

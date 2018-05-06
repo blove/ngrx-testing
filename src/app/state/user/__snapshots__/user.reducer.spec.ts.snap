@@ -1,0 +1,178 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`User Reducer [User] Add User Fail should update error to state 1`] = `
+Object {
+  "entities": Object {},
+  "error": [Error],
+  "ids": Array [],
+  "loading": false,
+  "selectedUserId": null,
+}
+`;
+
+exports[`User Reducer [User] Add User Success should add a user to state 1`] = `
+Object {
+  "entities": Object {
+    "1": Object {
+      "firstName": "Anakin",
+      "id": 1,
+      "lastName": "Skywalker",
+    },
+  },
+  "ids": Array [
+    1,
+  ],
+  "loading": false,
+  "selectedUserId": null,
+}
+`;
+
+exports[`User Reducer [User] Add User should toggle loading state 1`] = `
+Object {
+  "entities": Object {},
+  "error": undefined,
+  "ids": Array [],
+  "loading": true,
+  "selectedUserId": null,
+}
+`;
+
+exports[`User Reducer [User] Load User Fail should update error in state 1`] = `
+Object {
+  "entities": Object {},
+  "error": [Error],
+  "ids": Array [],
+  "loading": false,
+  "selectedUserId": null,
+}
+`;
+
+exports[`User Reducer [User] Load User Success should load a user to state 1`] = `
+Object {
+  "entities": Object {
+    "1": Object {
+      "firstName": "Anakin",
+      "id": 1,
+      "lastName": "Skywalker",
+    },
+  },
+  "ids": Array [
+    1,
+  ],
+  "loading": false,
+  "selectedUserId": null,
+}
+`;
+
+exports[`User Reducer [User] Load User should toggle loading state 1`] = `
+Object {
+  "entities": Object {},
+  "error": undefined,
+  "ids": Array [],
+  "loading": true,
+  "selectedUserId": null,
+}
+`;
+
+exports[`User Reducer [User] Load Users Fail should update error in state 1`] = `
+Object {
+  "entities": Object {},
+  "error": [Error],
+  "ids": Array [],
+  "loading": false,
+  "selectedUserId": null,
+}
+`;
+
+exports[`User Reducer [User] Load Users Success should add all users to state 1`] = `
+Object {
+  "entities": Object {
+    "1": Object {
+      "firstName": "Anakin",
+      "id": 1,
+      "lastName": "Skywalker",
+    },
+  },
+  "ids": Array [
+    1,
+  ],
+  "loading": false,
+  "selectedUserId": null,
+}
+`;
+
+exports[`User Reducer [User] Load Users should load a user to state 1`] = `
+Object {
+  "entities": Object {},
+  "error": undefined,
+  "ids": Array [],
+  "loading": true,
+  "selectedUserId": null,
+}
+`;
+
+exports[`User Reducer [User] Select User should set the selectedUserId property in state 1`] = `
+Object {
+  "entities": Object {},
+  "ids": Array [],
+  "loading": false,
+  "selectedUserId": 1,
+}
+`;
+
+exports[`User Reducer [User] Update User Fail should update error in state 1`] = `
+Object {
+  "entities": Object {},
+  "error": [Error],
+  "ids": Array [],
+  "loading": false,
+  "selectedUserId": null,
+}
+`;
+
+exports[`User Reducer [User] Update User Success should add all users to state 1`] = `
+Object {
+  "entities": Object {},
+  "ids": Array [],
+  "loading": false,
+  "selectedUserId": null,
+}
+`;
+
+exports[`User Reducer [User] Update User should load a user to state 1`] = `
+Object {
+  "entities": Object {},
+  "error": undefined,
+  "ids": Array [],
+  "loading": true,
+  "selectedUserId": null,
+}
+`;
+
+exports[`User Reducer [User] Update Users Success should add all users to state 1`] = `
+Object {
+  "entities": Object {},
+  "ids": Array [],
+  "loading": false,
+  "selectedUserId": null,
+}
+`;
+
+exports[`User Reducer [User] Update Users should load a user to state 1`] = `
+Object {
+  "entities": Object {},
+  "error": undefined,
+  "ids": Array [],
+  "loading": true,
+  "selectedUserId": null,
+}
+`;
+
+exports[`User Reducer undefined action should return the default state 1`] = `
+Object {
+  "entities": Object {},
+  "ids": Array [],
+  "loading": false,
+  "selectedUserId": null,
+}
+`;
