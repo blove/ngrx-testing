@@ -23,11 +23,6 @@ export class EditComponent implements OnInit {
   ngOnInit() {
     const PARAM_ID = 'id';
     this.user$ = this.activatedRoute.paramMap.pipe(
-      // tap(paramMap => {
-      //   const exists = paramMap.has(PARAM_ID);
-      //   const value = paramMap.get(PARAM_ID);
-      //   console.log(value);
-      // }),
       filter(paramMap => paramMap.has(PARAM_ID)),
       map(paramMap => paramMap.get(PARAM_ID)),
       tap(id => {

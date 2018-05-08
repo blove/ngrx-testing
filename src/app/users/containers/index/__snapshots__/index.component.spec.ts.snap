@@ -2,12 +2,17 @@
 
 exports[`IndexComponent should match snapshot 1`] = `
 <ng-component
-  store={[Function Store]}
-  users={[Function Store]}
+  router={[Function Router]}
+  store={[Function Object]}
+  users="undefined"
 >
-  <app-user-list
-    ng-reflect-users=""
+  <button
+    ng-reflect-router-link="add"
+    routerlink="add"
+    tabindex="0"
   >
+    Add User
+  </button><app-user-list>
     <ul>
       
     </ul>

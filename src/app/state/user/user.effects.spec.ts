@@ -43,7 +43,6 @@ describe('UserEffects', () => {
     TestBed.configureTestingModule({
       providers: [
         UserEffects,
-        // provideMockActions(() => actions$),
         {
           provide: Actions,
           useFactory: getActions
@@ -73,11 +72,11 @@ describe('UserEffects', () => {
     it('should return an AddUserSuccess action, with the user, on success', () => {
       const user = generateUser();
       const action = new AddUser({ user });
-      const completion = new AddUserSuccess({ user });
+      const outcome = new AddUserSuccess({ user });
 
       actions.stream = hot('-a', { a: action });
       const response = cold('-a|', { a: user });
-      const expected = cold('--b', { b: completion });
+      const expected = cold('--b', { b: outcome });
       userService.addUser = jest.fn(() => response);
 
       expect(effects.addUser).toBeObservable(expected);
@@ -87,11 +86,11 @@ describe('UserEffects', () => {
       const user = generateUser();
       const action = new AddUser({ user });
       const error = new Error();
-      const completion = new AddUserFail({ error });
+      const outcome = new AddUserFail({ error });
 
       actions.stream = hot('-a', { a: action });
       const response = cold('-#|', {}, error);
-      const expected = cold('--(b|)', { b: completion });
+      const expected = cold('--(b|)', { b: outcome });
       userService.addUser = jest.fn(() => response);
 
       expect(effects.addUser).toBeObservable(expected);
@@ -102,11 +101,11 @@ describe('UserEffects', () => {
     it('should return a LoadUsersSuccess action, with the users, on success', () => {
       const users = generateUsers();
       const action = new LoadUsers();
-      const completion = new LoadUsersSuccess({ users: users });
+      const outcome = new LoadUsersSuccess({ users: users });
 
-      actions.stream = hot('-a---', { a: action });
+      actions.stream = hot('-a', { a: action });
       const response = cold('-a|', { a: users });
-      const expected = cold('--b', { b: completion });
+      const expected = cold('--b', { b: outcome });
       userService.getUsers = jest.fn(() => response);
 
       expect(effects.loadUsers).toBeObservable(expected);
@@ -115,11 +114,11 @@ describe('UserEffects', () => {
     it('should return a LoadUsersFail action, with an error, on failure', () => {
       const action = new LoadUsers();
       const error = new Error();
-      const completion = new LoadUsersFail({ error: error });
+      const outcome = new LoadUsersFail({ error: error });
 
-      actions.stream = hot('-a---', { a: action });
+      actions.stream = hot('-a', { a: action });
       const response = cold('-#|', {}, error);
-      const expected = cold('--(b|)', { b: completion });
+      const expected = cold('--(b|)', { b: outcome });
       userService.getUsers = jest.fn(() => response);
 
       expect(effects.loadUsers).toBeObservable(expected);
@@ -130,11 +129,11 @@ describe('UserEffects', () => {
     it('should return a LoadUserSuccess action, with the user, on success', () => {
       const user = generateUser();
       const action = new LoadUser({ id: user.id });
-      const completion = new LoadUserSuccess({ user });
+      const outcome = new LoadUserSuccess({ user });
 
-      actions.stream = hot('-a---', { a: action });
+      actions.stream = hot('-a', { a: action });
       const response = cold('-a|', { a: user });
-      const expected = cold('--b', { b: completion });
+      const expected = cold('--b', { b: outcome });
       userService.getUser = jest.fn(() => response);
 
       expect(effects.loadUser).toBeObservable(expected);
@@ -144,11 +143,11 @@ describe('UserEffects', () => {
       const user = generateUser();
       const action = new LoadUser({ id: user.id });
       const error = new Error();
-      const completion = new LoadUserFail({ error });
+      const outcome = new LoadUserFail({ error });
 
-      actions.stream = hot('-a---', { a: action });
+      actions.stream = hot('-a', { a: action });
       const response = cold('-#|', {}, error);
-      const expected = cold('--(b|)', { b: completion });
+      const expected = cold('--(b|)', { b: outcome });
       userService.getUser = jest.fn(() => response);
 
       expect(effects.loadUser).toBeObservable(expected);
@@ -159,7 +158,7 @@ describe('UserEffects', () => {
     it('should return an UpdateUserSuccess action, with the user, on success', () => {
       const user = generateUser();
       const action = new UpdateUser({ user });
-      const completion = new UpdateUserSuccess({
+      const outcome = new UpdateUserSuccess({
         update: {
           id: user.id,
           changes: user
@@ -168,7 +167,7 @@ describe('UserEffects', () => {
 
       actions.stream = hot('-a', { a: action });
       const response = cold('-a|', { a: user });
-      const expected = cold('--b', { b: completion });
+      const expected = cold('--b', { b: outcome });
       userService.updateUser = jest.fn(() => response);
 
       expect(effects.updateUser).toBeObservable(expected);
@@ -178,11 +177,11 @@ describe('UserEffects', () => {
       const user = generateUser();
       const action = new UpdateUser({ user });
       const error = new Error();
-      const completion = new UpdateUserFail({ error });
+      const outcome = new UpdateUserFail({ error });
 
       actions.stream = hot('-a', { a: action });
       const response = cold('-#|', {}, error);
-      const expected = cold('--(b|)', { b: completion });
+      const expected = cold('--(b|)', { b: outcome });
       userService.updateUser = jest.fn(() => response);
 
       expect(effects.updateUser).toBeObservable(expected);

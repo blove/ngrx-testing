@@ -4,11 +4,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { UserService } from '@core/services/user.service';
-import { Store, StoreModule } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import * as fromRoot from '@state/index';
 import { LoadUser, SelectUser } from '@state/user/user.actions';
 import { User, generateUser } from '@state/user/user.model';
-import { hot } from 'jasmine-marbles';
+import { cold, hot } from 'jasmine-marbles';
 import { BehaviorSubject } from 'rxjs';
 import { UserFormComponent } from './../../components/user-form/user-form.component';
 import { EditComponent } from './edit.component';
@@ -53,8 +53,7 @@ describe('EditComponent', () => {
         HttpClientModule,
         FormsModule,
         RouterTestingModule,
-        ReactiveFormsModule,
-        StoreModule.forRoot(fromRoot.reducers)
+        ReactiveFormsModule
       ],
       providers: [
         {
@@ -77,7 +76,7 @@ describe('EditComponent', () => {
         {
           provide: UserService,
           useValue: {
-            getUser: jest.fn()
+            getUser: jest.fn(() => cold('-a', { a: user }))
           }
         }
       ]
@@ -101,21 +100,19 @@ describe('EditComponent', () => {
     expect(fixture).toMatchSnapshot();
   });
 
-  it('should dispatch SelectUser action for specified id parameter', () => {
-    const action = new SelectUser({ id: user.id });
-    const spy = jest.spyOn(store, 'dispatch');
+  describe('ngOnInit', () => {
+    it('should dispatch SelectUser action for specified id parameter', () => {
+      const action = new SelectUser({ id: user.id });
+      const spy = jest.spyOn(store, 'dispatch');
 
-    expect(spy).toHaveBeenCalledWith(action);
-  });
+      expect(spy).toHaveBeenCalledWith(action);
+    });
 
-  it('should dispatch LoadUser action for specified id parameter', () => {
-    const action = new LoadUser({ id: user.id });
-    const spy = jest.spyOn(store, 'dispatch');
+    it('should dispatch LoadUser action for specified id parameter', () => {
+      const action = new LoadUser({ id: user.id });
+      const spy = jest.spyOn(store, 'dispatch');
 
-    expect(spy).toHaveBeenCalledWith(action);
-  });
-
-  it('should select the currently selected user', () => {
-    component.user$.subscribe(selectedUser => expect(selectedUser).toBe(user));
+      expect(spy).toHaveBeenCalledWith(action);
+    });
   });
 });

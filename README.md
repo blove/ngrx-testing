@@ -1,27 +1,49 @@
-# NgrxMarbles
+# NgRx Testing
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.0.
+This project is based on a presentation given at the Rocky Mountain Angular meetup.
+Be sure to check out the [NgRx Testing slide deck](https://slides.com/blove/ngrx-testing/edit) as well.
 
-## Development server
+## Serve
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Start up the Angular CLI development server via:
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```bash
+$ ng serve
+```
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Build the app via:
 
-## Running unit tests
+```bash
+$ ng build
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Test
 
-## Running end-to-end tests
+This project uses Jest (instead of Karma) for running tests.
+Run the full test suite via:
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+```bash
+$ npm run test
+```
 
-## Further help
+You can also run the tests in a watch mode via:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+```bash
+$ npm run test:watch
+```
+
+This project uses Jest snapshot testing.
+Update the snapshots via:
+
+```bash
+$ npm run test -- --updateSnapshot
+```
+
+## Help?!
+
+I intend to write a blog post on the topic of testing NgRx using Jest that will explain much of the tests in this project.
+I just haven't yet. 🐶
+
+In the meantime, feel free to [check out my blog](http://brianflove.com).
