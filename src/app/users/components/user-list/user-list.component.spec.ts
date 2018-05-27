@@ -17,7 +17,6 @@ describe('UserListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(UserListComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
@@ -30,6 +29,11 @@ describe('UserListComponent', () => {
     component.users = users;
     fixture.detectChanges();
     expect(ulEl.childElementCount).toBe(users.length);
+
+    const firstLi = ulEl.querySelector('li:first-child');
+    expect(firstLi.textContent).toEqual(
+      `${users[0].firstName} ${users[0].lastName}`
+    );
   });
 
   it('should select a user when clicked', () => {

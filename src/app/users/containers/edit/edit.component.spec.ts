@@ -1,46 +1,21 @@
-import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { UserService } from '@core/services/user.service';
 import { Store } from '@ngrx/store';
 import * as fromRoot from '@state/index';
-import { LoadUser, SelectUser } from '@state/user/user.actions';
+import { LoadUser, SelectUser, UpdateUser } from '@state/user/user.actions';
 import { User, generateUser } from '@state/user/user.model';
-import { cold, hot } from 'jasmine-marbles';
+import { hot } from 'jasmine-marbles';
 import { BehaviorSubject } from 'rxjs';
 import { UserFormComponent } from './../../components/user-form/user-form.component';
 import { EditComponent } from './edit.component';
-
-/**
- * An ActivateRoute test double with a `paramMap` observable.
- * Use the `setParamMap()` method to add the next `paramMap` value.
- */
-// class ActivatedRouteStub {
-//   // Use a ReplaySubject to share previous values with subscribers
-//   // and pump new values into the `paramMap` observable
-//   private subject = new ReplaySubject<ParamMap>();
-
-//   constructor(initialParams?: Params) {
-//     this.setParamMap(initialParams);
-//   }
-
-//   /** The mock paramMap observable */
-//   readonly paramMap = this.subject.asObservable();
-
-//   /** Set the paramMap observables's next value */
-//   setParamMap(params?: Params) {
-//     this.subject.next(convertToParamMap(params));
-//   }
-// }
 
 describe('EditComponent', () => {
   let component: EditComponent;
   let fixture: ComponentFixture<EditComponent>;
   let store: Store<fromRoot.State>;
   let user: User;
-  let userService: UserService;
 
   beforeEach(() => {
     user = generateUser();
@@ -49,12 +24,7 @@ describe('EditComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [EditComponent, UserFormComponent],
-      imports: [
-        HttpClientModule,
-        FormsModule,
-        RouterTestingModule,
-        ReactiveFormsModule
-      ],
+      imports: [FormsModule, RouterTestingModule, ReactiveFormsModule],
       providers: [
         {
           provide: ActivatedRoute,
@@ -72,12 +42,6 @@ describe('EditComponent', () => {
             dispatch: jest.fn(),
             pipe: jest.fn(() => hot('-a', { a: user }))
           }
-        },
-        {
-          provide: UserService,
-          useValue: {
-            getUser: jest.fn(() => cold('-a', { a: user }))
-          }
         }
       ]
     }).compileComponents();
@@ -87,8 +51,6 @@ describe('EditComponent', () => {
     fixture = TestBed.createComponent(EditComponent);
     component = fixture.componentInstance;
     store = TestBed.get(Store);
-    userService = TestBed.get(UserService);
-    fixture.detectChanges();
   });
 
   it('should create', () => {
@@ -105,6 +67,8 @@ describe('EditComponent', () => {
       const action = new SelectUser({ id: user.id });
       const spy = jest.spyOn(store, 'dispatch');
 
+      fixture.detectChanges();
+
       expect(spy).toHaveBeenCalledWith(action);
     });
 
@@ -112,6 +76,21 @@ describe('EditComponent', () => {
       const action = new LoadUser({ id: user.id });
       const spy = jest.spyOn(store, 'dispatch');
 
+      fixture.detectChanges();
+
+      expect(spy).toHaveBeenCalledWith(action);
+    });
+  });
+
+  describe('onUserChange', () => {
+    it('should dispatch the UpdateUser action when onUserChange is invoked', () => {
+      const user = generateUser();
+      const action = new UpdateUser({ user });
+      const spy = jest.spyOn(store, 'dispatch');
+
+      fixture.detectChanges();
+
+      component.onUserChange(user);
       expect(spy).toHaveBeenCalledWith(action);
     });
   });

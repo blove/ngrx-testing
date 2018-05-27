@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import * as fromRoot from '@state/index';
 import { selectSelectedUser } from '@state/user';
-import { LoadUser, SelectUser } from '@state/user/user.actions';
+import { LoadUser, SelectUser, UpdateUser } from '@state/user/user.actions';
 import { User } from '@state/user/user.model';
 import { Observable } from 'rxjs';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
@@ -31,5 +31,9 @@ export class EditComponent implements OnInit {
       }),
       switchMap(id => this.store.pipe(select(selectSelectedUser)))
     );
+  }
+
+  onUserChange(user: User) {
+    this.store.dispatch(new UpdateUser({ user: user }));
   }
 }

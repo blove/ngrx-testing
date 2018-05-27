@@ -26,7 +26,7 @@ export class UserFormComponent implements OnChanges {
 
   ngOnChanges(simpleChanges: SimpleChanges) {
     if (simpleChanges.user && simpleChanges.user.currentValue) {
-      this.form.patchValue(this.user);
+      this.form.patchValue(simpleChanges.user.currentValue);
     }
   }
 

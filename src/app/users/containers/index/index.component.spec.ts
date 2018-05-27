@@ -3,7 +3,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Store } from '@ngrx/store';
 import { LoadUsers } from '@state/user/user.actions';
 import { generateUsers } from '@state/user/user.model';
-import { cold, hot } from 'jasmine-marbles';
+import { cold, getTestScheduler, hot } from 'jasmine-marbles';
+import { last } from 'rxjs/operators';
 import { UserListComponent } from './../../components/user-list/user-list.component';
 import { IndexComponent } from './index.component';
 
@@ -30,7 +31,6 @@ describe('IndexComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(IndexComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
@@ -48,7 +48,8 @@ describe('IndexComponent', () => {
       const store = TestBed.get(Store);
       const spy = jest.spyOn(store, 'dispatch');
 
-      component.ngOnInit();
+      fixture.detectChanges();
+
       expect(spy).toHaveBeenCalledWith(action);
     });
 
@@ -57,21 +58,27 @@ describe('IndexComponent', () => {
       const users = generateUsers();
       store.pipe = jest.fn(() => hot('-a', { a: users }));
 
-      component.ngOnInit();
+      fixture.detectChanges();
+
       const expected = cold('-a', { a: users });
       expect(component.users).toBeObservable(expected);
     });
   });
 
   describe('users', () => {
-    it('should be an observable of an array of user objects', () => {
+    it('should be an observable of an array of user objects', done => {
       const users = generateUsers();
-      const expected = hot('-a', { a: users });
       const store = TestBed.get(Store);
-      store.pipe = jest.fn(() => hot('-a', { a: users }));
+      store.pipe = jest.fn(() => cold('-a|', { a: users }));
 
-      component.ngOnInit();
-      expect(component.users).toBeObservable(expected);
+      fixture.detectChanges();
+
+      component.users.pipe(last()).subscribe(componentUsers => {
+        expect(componentUsers).toEqual(users);
+        done();
+      });
+
+      getTestScheduler().flush();
     });
   });
 });

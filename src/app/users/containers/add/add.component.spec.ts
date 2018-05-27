@@ -27,7 +27,6 @@ describe('AddComponent', () => {
     fixture = TestBed.createComponent(AddComponent);
     component = fixture.componentInstance;
     store = TestBed.get(Store);
-    fixture.detectChanges();
   });
 
   it('should create', () => {
@@ -38,6 +37,8 @@ describe('AddComponent', () => {
     const user = generateUser();
     const action = new AddUser({ user });
     const spy = jest.spyOn(store, 'dispatch');
+
+    fixture.detectChanges();
 
     component.onUserChange(user);
     expect(spy).toHaveBeenCalledWith(action);
