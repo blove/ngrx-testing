@@ -28,7 +28,7 @@ export class UserEffects {
     .pipe(
       map(action => action.payload),
       exhaustMap(payload => this.userService.addUser(payload.user)),
-      map(user => new AddUserSuccess({ user: user })),
+      map(user => new AddUserSuccess({ user })),
       catchError(error => of(new AddUserFail({ error })))
     );
 
@@ -38,7 +38,7 @@ export class UserEffects {
     .pipe(
       map(action => action.payload),
       exhaustMap(payload => this.userService.getUser(payload.id)),
-      map(user => new LoadUserSuccess({ user: user })),
+      map(user => new LoadUserSuccess({ user })),
       catchError(error => of(new LoadUserFail({ error })))
     );
 
@@ -47,7 +47,7 @@ export class UserEffects {
     .ofType<LoadUsers>(UserActionTypes.LoadUsers)
     .pipe(
       exhaustMap(() => this.userService.getUsers()),
-      map(users => new LoadUsersSuccess({ users: users })),
+      map(users => new LoadUsersSuccess({ users })),
       catchError(error => of(new LoadUsersFail({ error })))
     );
 

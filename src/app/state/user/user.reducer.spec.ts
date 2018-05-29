@@ -20,7 +20,7 @@ import {
 import { initialState, reducer } from './user.reducer';
 
 describe('User Reducer', () => {
-  let user: User = {
+  const user: User = {
     id: 1,
     firstName: 'Anakin',
     lastName: 'Skywalker'
