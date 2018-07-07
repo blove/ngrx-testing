@@ -84,13 +84,13 @@ describe('EditComponent', () => {
 
   describe('onUserChange', () => {
     it('should dispatch the UpdateUser action when onUserChange is invoked', () => {
-      const user = generateUser();
-      const action = new UpdateUser({ user });
+      const updatedUser = generateUser();
+      const action = new UpdateUser({ user: updatedUser });
       const spy = jest.spyOn(store, 'dispatch');
 
       fixture.detectChanges();
 
-      component.onUserChange(user);
+      component.onUserChange(updatedUser);
       expect(spy).toHaveBeenCalledWith(action);
     });
   });

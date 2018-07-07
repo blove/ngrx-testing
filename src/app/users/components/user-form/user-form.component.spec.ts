@@ -6,7 +6,7 @@ import { User, generateUser } from '@state/user/user.model';
 import { UserFormComponent } from './user-form.component';
 
 function newEvent(eventName: string, bubbles = false, cancelable = false) {
-  let evt = document.createEvent('CustomEvent');
+  const evt = document.createEvent('CustomEvent');
   evt.initCustomEvent(eventName, bubbles, cancelable, null);
   return evt;
 }
@@ -61,7 +61,7 @@ describe('UserFormComponent', () => {
     fixture.detectChanges();
 
     let updatedUser: User;
-    component.userChange.subscribe(user => (updatedUser = user));
+    component.userChange.subscribe(u => (updatedUser = u));
 
     component.user = user;
     component.ngOnChanges({

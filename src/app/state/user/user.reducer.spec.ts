@@ -20,7 +20,7 @@ import {
 import { initialState, reducer } from './user.reducer';
 
 describe('User Reducer', () => {
-  const user: User = {
+  const anakin: User = {
     id: 1,
     firstName: 'Anakin',
     lastName: 'Skywalker'
@@ -37,7 +37,7 @@ describe('User Reducer', () => {
 
   describe('[User] Add User', () => {
     it('should toggle loading state', () => {
-      const action = new AddUser({ user });
+      const action = new AddUser({ user: anakin });
       const result = reducer(initialState, action);
 
       expect(result).toEqual({
@@ -50,15 +50,15 @@ describe('User Reducer', () => {
 
   describe('[User] Add User Success', () => {
     it('should add a user to state', () => {
-      const action = new AddUserSuccess({ user });
+      const action = new AddUserSuccess({ user: anakin });
       const result = reducer(initialState, action);
 
       expect(result).toEqual({
         ...initialState,
         entities: {
-          [user.id]: user
+          [anakin.id]: anakin
         },
-        ids: [user.id],
+        ids: [anakin.id],
         loading: false
       });
     });
@@ -80,7 +80,7 @@ describe('User Reducer', () => {
 
   describe('[User] Load User', () => {
     it('should toggle loading state', () => {
-      const action = new LoadUser({ id: user.id });
+      const action = new LoadUser({ id: anakin.id });
       const result = reducer(initialState, action);
 
       expect(result).toEqual({
@@ -93,15 +93,15 @@ describe('User Reducer', () => {
 
   describe('[User] Load User Success', () => {
     it('should load a user to state', () => {
-      const action = new LoadUserSuccess({ user });
+      const action = new LoadUserSuccess({ user: anakin });
       const result = reducer(initialState, action);
 
       expect(result).toEqual({
         ...initialState,
         entities: {
-          [user.id]: user
+          [anakin.id]: anakin
         },
-        ids: [user.id],
+        ids: [anakin.id],
         loading: false
       });
     });
@@ -136,7 +136,7 @@ describe('User Reducer', () => {
 
   describe('[User] Load Users Success', () => {
     it('should add all users to state', () => {
-      const users = [user];
+      const users = [anakin];
       const action = new LoadUsersSuccess({ users });
       const result = reducer(initialState, action);
 
@@ -157,7 +157,7 @@ describe('User Reducer', () => {
 
   describe('[User] Load Users Fail', () => {
     it('should update error in state', () => {
-      const users = [user];
+      const users = [anakin];
       const error = new Error();
       const action = new LoadUsersFail({ error });
       const result = reducer(initialState, action);
@@ -173,7 +173,7 @@ describe('User Reducer', () => {
   describe('[User] Update User', () => {
     it('should toggle loading state', () => {
       const action = new UpdateUser({
-        user: { ...user, firstName: 'Darth', lastName: 'Vader' }
+        user: { ...anakin, firstName: 'Darth', lastName: 'Vader' }
       });
       const result = reducer(initialState, action);
 
@@ -188,24 +188,24 @@ describe('User Reducer', () => {
   describe('[User] Update User Success', () => {
     it('should update user in state', () => {
       const updatedUser: User = {
-        ...user,
+        ...anakin,
         firstName: 'Darth',
         lastName: 'Vader'
       };
       const action = new UpdateUserSuccess({
         update: {
-          id: user.id,
+          id: anakin.id,
           changes: updatedUser
         }
       });
 
-      const state = reducer(initialState, new AddUserSuccess({ user }));
+      const state = reducer(initialState, new AddUserSuccess({ user: anakin }));
       expect(state).toEqual({
         ...initialState,
         entities: {
-          [user.id]: user
+          [anakin.id]: anakin
         },
-        ids: [user.id],
+        ids: [anakin.id],
         loading: false
       });
 
@@ -214,7 +214,7 @@ describe('User Reducer', () => {
         ...state,
         entities: {
           ...state.entities,
-          [user.id]: updatedUser
+          [anakin.id]: updatedUser
         },
         ids: [...state.ids],
         loading: false
@@ -224,7 +224,7 @@ describe('User Reducer', () => {
 
   describe('[User] Update User Fail', () => {
     it('should update error in state', () => {
-      const users = [user];
+      const users = [anakin];
       const error = new Error();
       const action = new UpdateUserFail({ error });
       const result = reducer(initialState, action);
@@ -240,7 +240,7 @@ describe('User Reducer', () => {
   describe('[User] Update Users', () => {
     it('should toggle loading state', () => {
       const action = new UpdateUsers({
-        users: [{ ...user, firstName: 'Darth', lastName: 'Vader' }]
+        users: [{ ...anakin, firstName: 'Darth', lastName: 'Vader' }]
       });
       const result = reducer(initialState, action);
 
@@ -260,7 +260,7 @@ describe('User Reducer', () => {
         lastName: 'Palpaatine'
       };
       const vader = {
-        ...user,
+        ...anakin,
         firstName: 'Darth',
         lastName: 'Vader'
       };
@@ -269,7 +269,7 @@ describe('User Reducer', () => {
         firstName: 'Darth',
         lastName: 'Sidious'
       };
-      const originalUsers = [user, senator];
+      const originalUsers = [anakin, senator];
       const updatedUsers = [vader, sidious];
 
       const state = reducer(
@@ -282,7 +282,7 @@ describe('User Reducer', () => {
       const action = new UpdateUsersSuccess({
         update: [
           {
-            id: user.id,
+            id: anakin.id,
             changes: vader
           },
           {
@@ -310,12 +310,12 @@ describe('User Reducer', () => {
 
   describe('[User] Select User', () => {
     it('should set the selectedUserId property in state', () => {
-      const action = new SelectUser({ id: user.id });
+      const action = new SelectUser({ id: anakin.id });
       const result = reducer(initialState, action);
 
       expect(result).toEqual({
         ...initialState,
-        selectedUserId: user.id
+        selectedUserId: anakin.id
       });
     });
   });

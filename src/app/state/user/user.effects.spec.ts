@@ -1,6 +1,6 @@
+import { provideMockActions } from '@ngrx/effects/testing';
 import { TestBed } from '@angular/core/testing';
 import { UserService } from '@core/services/user.service';
-import { Actions } from '@ngrx/effects';
 import { cold, hot } from 'jasmine-marbles';
 import { Observable, empty } from 'rxjs';
 import {
@@ -20,22 +20,8 @@ import {
 import { UserEffects } from './user.effects';
 import { generateUser, generateUsers } from './user.model';
 
-export class TestActions extends Actions {
-  constructor() {
-    super(empty());
-  }
-
-  set stream(source: Observable<any>) {
-    this.source = source;
-  }
-}
-
-export function getActions() {
-  return new TestActions();
-}
-
 describe('UserEffects', () => {
-  let actions: TestActions;
+  let actions: Observable<any>;
   let effects: UserEffects;
   let userService: UserService;
 
@@ -43,10 +29,7 @@ describe('UserEffects', () => {
     TestBed.configureTestingModule({
       providers: [
         UserEffects,
-        {
-          provide: Actions,
-          useFactory: getActions
-        },
+        provideMockActions(() => actions)
         {
           provide: UserService,
           useValue: {
@@ -59,7 +42,6 @@ describe('UserEffects', () => {
       ]
     });
 
-    actions = TestBed.get(Actions);
     effects = TestBed.get(UserEffects);
     userService = TestBed.get(UserService);
   });
@@ -74,7 +56,7 @@ describe('UserEffects', () => {
       const action = new AddUser({ user });
       const outcome = new AddUserSuccess({ user });
 
-      actions.stream = hot('-a', { a: action });
+      actions = hot('-a', { a: action });
       const response = cold('-a|', { a: user });
       const expected = cold('--b', { b: outcome });
       userService.addUser = jest.fn(() => response);
@@ -88,7 +70,7 @@ describe('UserEffects', () => {
       const error = new Error();
       const outcome = new AddUserFail({ error });
 
-      actions.stream = hot('-a', { a: action });
+      actions = hot('-a', { a: action });
       const response = cold('-#|', {}, error);
       const expected = cold('--(b|)', { b: outcome });
       userService.addUser = jest.fn(() => response);
@@ -103,7 +85,7 @@ describe('UserEffects', () => {
       const action = new LoadUsers();
       const outcome = new LoadUsersSuccess({ users: users });
 
-      actions.stream = hot('-a', { a: action });
+      actions = hot('-a', { a: action });
       const response = cold('-a|', { a: users });
       const expected = cold('--b', { b: outcome });
       userService.getUsers = jest.fn(() => response);
@@ -116,7 +98,7 @@ describe('UserEffects', () => {
       const error = new Error();
       const outcome = new LoadUsersFail({ error: error });
 
-      actions.stream = hot('-a', { a: action });
+      actions = hot('-a', { a: action });
       const response = cold('-#|', {}, error);
       const expected = cold('--(b|)', { b: outcome });
       userService.getUsers = jest.fn(() => response);
@@ -131,7 +113,7 @@ describe('UserEffects', () => {
       const action = new LoadUser({ id: user.id });
       const outcome = new LoadUserSuccess({ user });
 
-      actions.stream = hot('-a', { a: action });
+      actions = hot('-a', { a: action });
       const response = cold('-a|', { a: user });
       const expected = cold('--b', { b: outcome });
       userService.getUser = jest.fn(() => response);
@@ -145,7 +127,7 @@ describe('UserEffects', () => {
       const error = new Error();
       const outcome = new LoadUserFail({ error });
 
-      actions.stream = hot('-a', { a: action });
+      actions = hot('-a', { a: action });
       const response = cold('-#|', {}, error);
       const expected = cold('--(b|)', { b: outcome });
       userService.getUser = jest.fn(() => response);
@@ -165,7 +147,7 @@ describe('UserEffects', () => {
         }
       });
 
-      actions.stream = hot('-a', { a: action });
+      actions = hot('-a', { a: action });
       const response = cold('-a|', { a: user });
       const expected = cold('--b', { b: outcome });
       userService.updateUser = jest.fn(() => response);
@@ -179,7 +161,7 @@ describe('UserEffects', () => {
       const error = new Error();
       const outcome = new UpdateUserFail({ error });
 
-      actions.stream = hot('-a', { a: action });
+      actions = hot('-a', { a: action });
       const response = cold('-#|', {}, error);
       const expected = cold('--(b|)', { b: outcome });
       userService.updateUser = jest.fn(() => response);

@@ -6,7 +6,7 @@ import { UserListComponent } from './user-list.component';
 describe('UserListComponent', () => {
   let component: UserListComponent;
   let fixture: ComponentFixture<UserListComponent>;
-  let users = generateUsers();
+  const users = generateUsers();
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -37,7 +37,6 @@ describe('UserListComponent', () => {
   });
 
   it('should select a user when clicked', () => {
-    const users = generateUsers();
     const user = users[0];
 
     component.users = users;
@@ -47,7 +46,7 @@ describe('UserListComponent', () => {
     );
 
     let selectedUser: User;
-    component.selectUser.subscribe(user => (selectedUser = user));
+    component.selectUser.subscribe(u => (selectedUser = u));
 
     anchorDebugEl.triggerEventHandler('click', user);
     expect(selectedUser).toEqual(user);

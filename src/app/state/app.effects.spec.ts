@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { AppEffects } from './app.effects';
 
 describe('AppService', () => {
-  let actions$: Observable<any>;
+  const actions$ = new Observable();
   let effects: AppEffects;
 
   beforeEach(() => {
