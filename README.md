@@ -3,7 +3,7 @@
 # NgRx Testing
 
 This project is based on a presentation given at the Rocky Mountain Angular meetup.
-Be sure to check out the [NgRx Testing slide deck](https://slides.com/blove/ngrx-testing/edit) as well.
+Be sure to check out the [NgRx Testing slide deck](https://slides.com/blove/ngrx-testing-jasmine-marbles) as well.
 
 ## Blog Posts
 
