@@ -52,15 +52,7 @@
     "protractor": "~5.3.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.10.0",
-    "typescript": "~2.9.2",
+    "typescript": "~2.7.2",
     "webpack-visualizer-plugin": "^0.1.11"
-  },
-  "jest": {
-    "preset": "jest-preset-angular",
-    "setupTestFrameworkScriptFile": "<rootDir>/src/setupJest.ts",
-    "moduleNameMapper": {
-      "@core/(.*)": "<rootDir>/src/app/core/$1",
-      "@state/(.*)": "<rootDir>/src/app/state/$1"
-    }
   }
 }
